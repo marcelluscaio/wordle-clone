@@ -1,19 +1,28 @@
 import { useState } from "react";
-import type { TGameInfo } from "../Game/Game";
-import { validateGuess } from "../Game/utils";
+import { validateGuess } from "./utils";
 import {
 	INITIAL_GUESSES,
 	NUM_OF_GUESSES_ALLOWED as GUESSES_AMOUNT,
-} from "../../constants";
-import WinMessage from "../Game/WinMessage";
-import LoseMessage from "../Game/LoseMessage";
-import Banner from "../Game/Banner";
-import Form from "../Game/Form";
-import Keyboard from "../Game/Keyboard";
+	type TInitialGuess,
+} from "../../../constants";
+import WinMessage from "./WinMessage";
+import LoseMessage from "./LoseMessage";
+import Banner from "./Banner";
+import Form from "./Form";
+import Keyboard from "./Keyboard";
 
 type Props = {
 	answer: string;
 };
+
+type Guess = { letter: string; status: "incorrect" | "misplaced" | "correct" }[];
+export type { Guess };
+
+type TGameInfo = {
+	guesses: (Guess | TInitialGuess)[];
+	didUserWin: boolean;
+};
+export type { TGameInfo };
 function GameBoard({ answer }: Props) {
 	const initialGame = {
 		guesses: [],

@@ -1,5 +1,5 @@
-import type { TInitialGuess } from "../../../constants";
-import type { Guess } from "../Game";
+import type { TInitialGuess } from "../../../../constants";
+import type { Guess } from "../GameBoard";
 
 function getClass(guesses: (Guess | TInitialGuess)[], letter: string) {
 	const statuses = guesses
