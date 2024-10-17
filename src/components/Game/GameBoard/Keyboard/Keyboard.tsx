@@ -1,5 +1,6 @@
-import { KEYBOARD_KEYS, type TInitialGuess } from "../../../constants";
-import type { Guess } from "../Game";
+import { KEYBOARD_KEYS, type TInitialGuess } from "../../../../constants";
+import type { Guess } from "../GameBoard";
+
 import { getClass } from "./utils";
 
 type Props = {

@@ -1,28 +1,37 @@
 import { useState } from "react";
-import type { TGameInfo } from "../Game/Game";
-import { validateGuess } from "../Game/utils";
+import { validateGuess } from "./utils";
 import {
 	INITIAL_GUESSES,
 	NUM_OF_GUESSES_ALLOWED as GUESSES_AMOUNT,
-} from "../../constants";
-import WinMessage from "../Game/WinMessage";
-import LoseMessage from "../Game/LoseMessage";
-import Banner from "../Game/Banner";
-import Form from "../Game/Form";
-import Keyboard from "../Game/Keyboard";
+	type TInitialGuess,
+} from "../../../constants";
+import WinMessage from "./WinMessage";
+import LoseMessage from "./LoseMessage";
+import Banner from "./Banner";
+import Form from "./Form";
+import Keyboard from "./Keyboard";
+
+type Guess = { letter: string; status: "incorrect" | "misplaced" | "correct" }[];
+
+type TGameInfo = {
+	guesses: (Guess | TInitialGuess)[];
+	didUserWin: boolean;
+};
 
 type Props = {
 	answer: string;
+	resetAnswer: () => void;
 };
-function GameBoard({ answer }: Props) {
+
+function GameBoard({ answer, resetAnswer }: Props) {
 	const initialGame = {
 		guesses: [],
 		didUserWin: false,
 	};
-	const [game, setGame] = useState<TGameInfo>(initialGame);
-	const { guesses, didUserWin } = game;
+	const [gameInfo, setGameInfo] = useState<TGameInfo>(initialGame);
+	const { guesses, didUserWin } = gameInfo;
 	function updateGame(partialGame: Partial<TGameInfo>) {
-		setGame((previous) => {
+		setGameInfo((previous) => {
 			const result = partialGame.guesses
 				? {
 						...previous,
@@ -46,7 +55,8 @@ function GameBoard({ answer }: Props) {
 			6 || didUserWin;
 
 	function resetGame() {
-		setGame(initialGame);
+		setGameInfo(initialGame);
+		resetAnswer();
 	}
 
 	const FinalMessage = didUserWin ? (
@@ -93,3 +103,4 @@ function GameBoard({ answer }: Props) {
 }
 
 export default GameBoard;
+export type { TGameInfo, Guess };
