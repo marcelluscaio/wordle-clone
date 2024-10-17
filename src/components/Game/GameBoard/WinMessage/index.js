@@ -1,2 +1,2 @@
-export * from "./WinMessage.js";
-export { default } from "./WinMessage.js";
+export * from "./WinMessage.tsx";
+export { default } from "./WinMessage.tsx";

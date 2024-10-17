@@ -2,10 +2,9 @@
 
 To Do
 
-- [ ] Convert to typescript
-- Create components
-  Better names
-- Restructure styles
+- Guess x Guesses
+- restart answer
+- gameboard lines 18 to 25
 
 ## Joy of React, Project I
 

@@ -11,27 +11,27 @@ import Banner from "./Banner";
 import Form from "./Form";
 import Keyboard from "./Keyboard";
 
-type Props = {
-	answer: string;
-};
-
 type Guess = { letter: string; status: "incorrect" | "misplaced" | "correct" }[];
-export type { Guess };
 
 type TGameInfo = {
 	guesses: (Guess | TInitialGuess)[];
 	didUserWin: boolean;
 };
-export type { TGameInfo };
-function GameBoard({ answer }: Props) {
+
+type Props = {
+	answer: string;
+	resetAnswer: () => void;
+};
+
+function GameBoard({ answer, resetAnswer }: Props) {
 	const initialGame = {
 		guesses: [],
 		didUserWin: false,
 	};
-	const [game, setGame] = useState<TGameInfo>(initialGame);
-	const { guesses, didUserWin } = game;
+	const [gameInfo, setGameInfo] = useState<TGameInfo>(initialGame);
+	const { guesses, didUserWin } = gameInfo;
 	function updateGame(partialGame: Partial<TGameInfo>) {
-		setGame((previous) => {
+		setGameInfo((previous) => {
 			const result = partialGame.guesses
 				? {
 						...previous,
@@ -55,7 +55,8 @@ function GameBoard({ answer }: Props) {
 			6 || didUserWin;
 
 	function resetGame() {
-		setGame(initialGame);
+		setGameInfo(initialGame);
+		resetAnswer();
 	}
 
 	const FinalMessage = didUserWin ? (
@@ -102,3 +103,4 @@ function GameBoard({ answer }: Props) {
 }
 
 export default GameBoard;
+export type { TGameInfo, Guess };

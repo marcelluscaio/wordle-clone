@@ -1,2 +1,2 @@
-export * from "./LoseMessage.js";
-export { default } from "./LoseMessage.js";
+export * from "./LoseMessage.tsx";
+export { default } from "./LoseMessage.tsx";

@@ -3,19 +3,19 @@ import { sample } from "../../utils/utils";
 
 type Answer = string;
 type AnswerSuccess = {
-	initialAnswer: Answer;
+	answer: Answer;
 	success: true;
 };
 type AnswerError = {
 	error: string;
 	success: false;
 };
-type InitialAnswerTry = AnswerSuccess | AnswerError;
+type AnswerTry = AnswerSuccess | AnswerError;
 
-function getInitialAnswer(): InitialAnswerTry {
+function getNewAnswer(): AnswerTry {
 	try {
 		return {
-			initialAnswer: sample(WORDS),
+			answer: sample(WORDS),
 			success: true,
 		};
 	} catch (error) {
@@ -27,5 +27,5 @@ function getInitialAnswer(): InitialAnswerTry {
 	}
 }
 
-export { getInitialAnswer };
+export { getNewAnswer };
 export type { Answer };
