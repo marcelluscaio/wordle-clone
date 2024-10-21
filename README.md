@@ -1,11 +1,5 @@
 # Word Game
 
-To Do
-
-- Guess x Guesses
-- restart answer
-- gameboard lines 18 to 25
-
 ## Joy of React, Project I
 
 In this project, we'll recreate a popular online word game, Wordle:

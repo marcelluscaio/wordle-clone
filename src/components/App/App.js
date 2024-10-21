@@ -1,16 +1,16 @@
-import Game from '../Game';
-import Header from '../Header';
+import Header from "../Header";
+import Game from "../Game";
 
 function App() {
-  return (
-    <div className="wrapper">
-      <Header />
+	return (
+		<>
+			<Header />
 
-      <div className="game-wrapper">
-        <Game />
-      </div>
-    </div>
-  );
+			<div className="game-wrapper">
+				<Game />
+			</div>
+		</>
+	);
 }
 
 export default App;
