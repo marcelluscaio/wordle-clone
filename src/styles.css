@@ -1,8 +1,7 @@
 html {
-	overflow-y: scroll;
-
-	--game-spacing: 32px;
-	--header-height: 4rem;
+	--fs-1: 1rem;
+	--fs-2: 1.25rem;
+	--fs-3: 2rem;
 
 	--color-success: hsl(150deg 70% 30%);
 	--color-warning: hsl(50deg 100% 30%);
@@ -18,12 +17,6 @@ body {
 	font-family: sans-serif;
 }
 
-@media (max-height: 600px) {
-	body {
-		--game-spacing: 8px;
-	}
-}
-
 button {
 	margin: 0;
 	padding: 0;
@@ -34,76 +27,84 @@ button {
 	color: inherit;
 }
 
-.wrapper {
-	display: flex;
-	flex-direction: column;
-	min-height: 100%;
-}
-
 header {
 	display: flex;
-	height: var(--header-height);
+	justify-content: center;
+	padding-block: 1rem;
 	border-bottom: 1px solid var(--color-gray-700);
 	color: var(--color-gray-300);
 }
 
-header .side {
-	width: var(--header-height);
-	display: grid;
-	place-content: center;
-}
-
 h1 {
-	flex: 1;
-	font-size: 2rem;
-	line-height: var(--header-height);
+	font-size: var(--fs-3);
+	line-height: 1.2;
 	text-align: center;
 }
 
-@media (max-width: 25rem) {
-	h1 {
-		font-size: 1.25rem;
-	}
+.game-wrapper {
+	width: min(100%, 120ch);
+	padding: 2rem;
+	margin-inline: auto;
 }
 
-.game-wrapper {
-	display: grid;
-	gap: var(--game-spacing);
-	padding: var(--game-spacing) 32px;
-	margin-inline: auto;
-	max-width: min(500px, 58vh, 100%);
+main {
+	display: flex;
+	align-items: flex-start;
+	gap: 4vw;
+}
+
+@media (max-width: 60em) {
+	:root {
+		--fs-1: 1rem;
+		--fs-2: 1rem;
+		--fs-3: 1.75rem;
+	}
+	.game-wrapper {
+		width: min(100%, 60ch);
+		padding: 1rem 2rem;
+	}
+	main {
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+	}
 }
 
 .guess-results {
 	--gap: 0.25rem;
-	flex: 1;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	gap: var(--gap);
 }
 
+.guess-results,
+.form-container {
+	width: 100%;
+}
+
+.form-container {
+	display: grid;
+	gap: 1rem;
+}
+
 .guess {
 	display: flex;
-	gap: var(--gap); /* 
-	margin-bottom: 4px; */
+	gap: var(--gap);
 }
 
 .cell {
-	/* position: relative; */
-	width: 20%;
 	display: grid;
 	place-content: center;
+
+	width: 20%;
 	aspect-ratio: 1 / 1;
 	border: 2px solid var(--color-gray-700);
 	border-radius: var(--radius);
-	font-size: 2rem;
+
+	font-size: var(--fs-3);
 }
 
-/*
-  Round the corners for the 4 cells at the very corners of
-  the game board
-*/
 .guess:first-of-type .cell:first-of-type {
 	--radius: 4px 0px 0px 0px;
 }
@@ -117,39 +118,41 @@ h1 {
 	--radius: 0px 0px 0px 4px;
 }
 
-.cell.correct {
-	background: var(--color-success);
-	border-color: var(--color-success);
+.cell {
+	--color: transparent;
+}
+.cell:is(.cell.correct, .cell.incorrect, .cell.misplaced) {
 	color: white;
+	background: var(--color);
+	border-color: var(--color);
+}
+.cell.correct {
+	--color: var(--color-success);
 }
 .cell.incorrect {
-	background: var(--color-gray-300);
-	border-color: var(--color-gray-300);
-	color: white;
+	--color: var(--color-gray-300);
 }
 .cell.misplaced {
-	background: var(--color-warning);
-	border-color: var(--color-warning);
-	color: white;
+	--color: var(--color-warning);
 }
 
 .guess-input-wrapper {
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
+	gap: 0.5rem;
 }
 
 .guess-input-wrapper label {
-	font-size: 1.25rem;
+	font-size: var(--fs-2);
 }
 
 .guess-input-wrapper input {
 	display: block;
 	width: 100%;
-	font-size: 2rem;
+	font-size: var(--fs-3);
 	border: 2px solid var(--color-gray-300);
-	border-radius: 4px;
-	padding: 8px 16px;
+	border-radius: 0.25em;
+	padding: 0.25em 0.5em;
 	outline-offset: 4px;
 }
 
@@ -159,7 +162,7 @@ h1 {
 }
 
 .guess-input-wrapper .count {
-	font-size: 1rem;
+	font-size: var(--fs-1);
 }
 
 .guess-input-wrapper .count span {
@@ -173,15 +176,17 @@ h1 {
 .guess-input-wrapper .count span.less {
 	color: var(--color-warning);
 }
+
 .guess-input-wrapper .count span.exact {
 	color: var(--color-success);
 }
+
 .guess-input-wrapper .count span.more {
 	color: var(--color-error);
 }
 
 .guess-input-wrapper .error {
-	font-size: 1rem;
+	font-size: var(--fs-1);
 	color: var(--color-error);
 }
 
@@ -202,38 +207,49 @@ h1 {
 	z-index: 1;
 }
 
+@keyframes slideDown {
+	from {
+		transform: translateY(-100%);
+	}
+	to {
+		transform: translateY(0%);
+	}
+}
+
 .happy.banner {
 	background: var(--color-success);
 }
+
 .sad.banner {
 	background: var(--color-error);
 }
 
 .banner button {
-	margin-top: 1em;
-	border: 1px solid white;
 	padding: 0.5em 1em;
+	border: 1px solid white;
+	margin-top: 1em;
 	border-radius: 0.5em;
-	font-size: 1.25rem;
+	font-size: var(--fs-2);
 }
 
 .keyboard {
+	--gap: 0.5rem;
 	display: grid;
-	gap: 0.5rem;
+	gap: var(--gap);
 }
 
 .keyboard > div {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: 0.5rem;
+	gap: var(--gap);
 }
 
 .keyboard span {
-	background-color: var(--color-gray-900);
-	font-size: 1rem;
 	padding: 0.5em 0.75em;
 	border-radius: 0.25em;
+	background-color: var(--color-gray-900);
+	font-size: var(--fs-1);
 }
 
 .keyboard span:is(.correct, .misplaced, .incorrect) {
@@ -243,7 +259,6 @@ h1 {
 .keyboard span.correct {
 	background-color: var(--color-success);
 }
-
 .keyboard span.misplaced {
 	background-color: var(--color-warning);
 }
@@ -260,39 +275,4 @@ h1 {
 	margin: -1px;
 	padding: 0;
 	border: 0;
-}
-
-/*
-  Modal styles
-
-  HACK: I'm doing this in a quick and dirty way.
-  Later in the course, we'll see my preferred way of building
-  modals in React.
-*/
-[data-reach-dialog-content] {
-	position: relative;
-	border-radius: 8px;
-	padding: 24px 32px;
-}
-.modal-close-btn {
-	position: absolute;
-	top: 0;
-	right: 0;
-	padding: 16px;
-	cursor: pointer;
-}
-.modal-title {
-	margin-bottom: 0.5em;
-}
-
-/*
-  Keyframe animations
-*/
-@keyframes slideDown {
-	from {
-		transform: translateY(-100%);
-	}
-	to {
-		transform: translateY(0%);
-	}
 }

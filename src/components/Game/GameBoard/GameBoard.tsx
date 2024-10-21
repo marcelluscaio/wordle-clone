@@ -93,11 +93,13 @@ function GameBoard({ answer, resetAnswer }: Props) {
 					</p>
 				))}
 			</div>
-			<Form
-				didGameEnd={didGameEnd}
-				submitAction={submitGuess}
-			/>
-			<Keyboard guesses={guesses} />
+			<div className="form-container">
+				<Form
+					didGameEnd={didGameEnd}
+					submitAction={submitGuess}
+				/>
+				<Keyboard guesses={guesses} />
+			</div>
 		</main>
 	);
 }
